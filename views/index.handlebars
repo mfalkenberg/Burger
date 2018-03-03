@@ -1,50 +1,53 @@
 <div class="head-container">
   <img id="hamburger-image" src="assets/img/burger.jpeg" alt="Burger image.">
-
-  <h1>EAT BURGER</h1>
+  <header>EAT BURGER</header>
 </div>
 
-<h3>Your ordered Burger</h3>
+<div class="main-container">
+  <section id="available-hamburgers">
+    <ul class="burger-list">
+      {{#each burgers}}
+      {{#unless this.devoured}}
+        <li class="available-burger">
+          <span class="burgers">
+          {{this.id}} 
+          {{this.burger_name}}
+        </span>
+        <span id="devour-button">
+            <form action="/{{this.id}}" method="POST">
+              <input type="hidden" name="devoured" value="true">
+              <button class="bevour-button" type="submit">Devour It!</button>
+            </form>
+        </span> 
+        </li>
+      {{/unless}} 
+      {{/each}}
+    </ul>
+  </section>  
 
-<ul class="burger-box">
-  {{#each burgers}}
-  {{#unless this.devoured}}
-    <li class="available-burger">
-      <span class="burgers">
-      {{this.id}} 
-      {{this.burger_name}}
-    </span>
-    <span id="devour-button">
-        <form action="/{{this.id}}" method="POST">
-          <input type="hidden" name="devoured" value="true">
-          <button class="bevour-button" type="submit">Devour It!</button>
-        </form>
-    </span> 
-    </li>
-  {{/unless}} 
-  {{/each}}
-</ul>
+  <section id="devoured-hamburgers">
+    <ul>
+      {{#each burgers}}
+      {{#if this.devoured}}
+        <li class="devour-burger">
+          {{this.id}} 
+          {{this.burger_name}}
+        </li>
+      {{/if}}
+      {{/each}}
+    <ul>   
+  </section> 
 
-<ul>
-  {{#each burgers}}
-  {{#if this.devoured}}
-    <li class="devour-burger">
-      {{this.id}} 
-      {{this.burger_name}}
-    </li>
-  {{/if}}
-  {{/each}}
-<ul>    
+  <section id ="new-burger">
+    <form class="create-form" action="/" method="POST">
 
+      <div class="form-group">
+        <textarea id="new-burger-text" rows="4" name="burger_name"></textarea>
+      </div>
 
+      <button type="submit" id="new-burger-submit">Submit</button>
+    </form>
 
-<form class="create-form" action="/" method="POST">
-
-  <div class="form-group">
-    <textarea id="new-burger-text" rows="4" name="burger_name"></textarea>
-  </div>
-
-  <button type="submit" id="new-burger-submit">Submit</button>
-</form>
-
-<p>Enter a burger you want to order.</p>
+      <p>Enter a burger you want to order.</p>
+  </section>
+</div>
